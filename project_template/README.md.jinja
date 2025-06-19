@@ -2,7 +2,9 @@
 # {{ repository_name }}
 
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml)
+<!-- Uncomment after enabling MegaLinter by renaming mega-linter.yml.example to mega-linter.yml
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml)
+-->
 {%- if is_public_repo %}
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
 {%- endif %}
@@ -12,6 +14,27 @@
 [![Checked with mypy](https://www.mypy-lang.org/static/mypy_badge.svg)](https://mypy-lang.org/)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/blob/main/LICENSE)
+
+---
+
+## Quick Setup: Enable MegaLinter CI
+
+This repository includes a pre-configured MegaLinter workflow for automated code quality checks, but it needs to be manually enabled:
+
+**To activate MegaLinter:**
+1. Rename `.github/workflows/mega-linter.yml.example` to `.github/workflows/mega-linter.yml`
+2. Commit and push the change
+
+**Why this step is needed:**
+GitHub Actions security restrictions prevent automatic creation of workflow files during template initialization. Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
+
+Once enabled, MegaLinter will automatically run on all Pull Requests and commits to `main`, checking:
+- Python code quality (Ruff, Black, Pylint, MyPy)
+- GitHub Actions workflows
+- Documentation formatting
+- Shell scripts, Dockerfiles, and more
+
+---
 
 {{ repository_description }}
 
