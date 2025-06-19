@@ -2,7 +2,7 @@
 # {{ repository_name }}
 
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml)
-<!-- Uncomment after enabling MegaLinter by renaming mega-linter.yml.example to mega-linter.yml
+<!-- Uncomment after enabling MegaLinter by renaming mega-linter.yml.example to mega-linter.yml and moving it to the .github/workflow folder
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml)
 -->
 {%- if is_public_repo %}
@@ -23,7 +23,8 @@ This repository includes a pre-configured MegaLinter workflow for automated code
 
 **To activate MegaLinter:**
 1. Rename `.github/workflows/mega-linter.yml.example` to `.github/workflows/mega-linter.yml`
-2. Commit and push the change
+2. Move the file into the workflows folder within the .github folder
+3. Commit and push the change
 
 **Why this step is needed:**
 GitHub Actions security restrictions prevent automatic creation of workflow files during template initialization. Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
