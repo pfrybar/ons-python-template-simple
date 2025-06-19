@@ -123,12 +123,13 @@ jobs:
             - Template scripts removed
 
             ## Next Steps
-            After merging this PR:
+            After this PR is automatically merged:
             - [ ] Update CODEOWNERS with appropriate team members
             - [ ] Complete README with project-specific information
             - [ ] Review and update dependencies as needed
+            - [ ] Enable MegaLinter by renaming mega-linter.yml.example to mega-linter.yml and moving it to the .github/workflow folder
 
-            This PR was automatically created by the template initialisation process.
+            This PR was automatically created and merged by the template initialisation process.
           branch: template-initialisation
           delete-branch: true
           base: main
