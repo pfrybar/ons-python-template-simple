@@ -2,7 +2,7 @@
 # {{ repository_name }}
 
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml)
-<!-- Uncomment after enabling MegaLinter by renaming mega-linter.yml.example to mega-linter.yml and moving it to the .github/workflow folder
+<!-- Uncomment after enabling MegaLinter by renaming [mega-linter.yml.example](.github/mega-linter.yml.example) to mega-linter.yml and moving it to the [.github/workflow](.github/workflow) folder
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/mega-linter.yml)
 -->
 {%- if is_public_repo %}
@@ -22,8 +22,8 @@
 This repository includes a pre-configured MegaLinter workflow for automated code quality checks, but it needs to be manually enabled:
 
 **To activate MegaLinter:**
-1. Rename `.github/workflows/mega-linter.yml.example` to `.github/workflows/mega-linter.yml`
-2. Move the file into the workflows folder within the .github folder
+1. Rename [.github/mega-linter.yml.example](.github/mega-linter.yml.example) to `.github/mega-linter.yml`
+2. Move the file from [.github](.github) to the [.github/workflows](.github/workflows) folder
 3. Commit and push the change
 
 **Why this step is needed:**
