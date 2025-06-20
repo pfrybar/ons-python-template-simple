@@ -147,13 +147,13 @@ jobs:
           # Remove the rename workflow file in the PR branch
           git checkout template-initialisation
           git rm .github/workflows/rename-project.yml
-          
+
           # Remove root CodeQL workflow if repository is not public
           # This file gets copied by GitHub's "Use this template" feature but should only exist for public repos
           if [[ "${{ env.REPOSITORY_VISIBILITY }}" != "public" && -f .github/workflows/codeql.yml ]]; then
             git rm .github/workflows/codeql.yml
           fi
-          
+
           git commit -m "Remove template initialisation workflow and cleanup copied files"
           git push origin template-initialisation
 

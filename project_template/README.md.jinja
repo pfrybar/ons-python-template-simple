@@ -20,14 +20,17 @@
 This repository includes a pre-configured MegaLinter workflow for automated code quality checks, but it needs to be manually enabled:
 
 **To activate MegaLinter:**
+
 1. Rename [.github/mega-linter.yml.example](.github/mega-linter.yml.example) to `.github/mega-linter.yml`
 2. Move the file from [.github](.github) to the [.github/workflows](.github/workflows) folder
 3. Commit and push the change
 
 **Why this step is needed:**
-GitHub Actions security restrictions prevent automatic creation of workflow files during template initialisation. Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
+GitHub Actions security restrictions prevent automatic creation of workflow files during template initialisation.
+Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
 
 Once enabled, MegaLinter will automatically run on all Pull Requests and commits to `main`, checking:
+
 - Python code quality (Ruff, Black, Pylint, MyPy)
 - GitHub Actions workflows
 - Documentation formatting
@@ -37,7 +40,9 @@ Once enabled, MegaLinter will automatically run on all Pull Requests and commits
 
 {{ repository_description }}
 
-> **IMPORTANT**: This README was generated from a template. Please update it with specific information about your project, including:
+**IMPORTANT**: This README was generated from a template.
+Please update it with specific information about your project, including:
+
 > - Detailed project description and purpose
 > - Specific installation requirements
 > - Usage examples and API documentation
