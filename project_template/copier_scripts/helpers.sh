@@ -177,7 +177,7 @@ JSON_BRANCH_PROTECTION_CONFIG=$(
                 "context": "Lint and Test"
             },
             {
-                "context": "MegaLinter"
+                "context": "Bandit Security Scan"
             },
             {
                 "context": "Analyze (python)"

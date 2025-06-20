@@ -13,18 +13,20 @@ clean: ## Clean the temporary files.
 	rm -rf .mypy_cache
 	rm -rf .coverage
 	rm -rf .ruff_cache
-	rm -rf megalinter-reports
 
 .PHONY: format
-format:  ## Format the code.
-	{{ package_manager }} run black .
+format:  ## Format the code using Ruff.
+	{{ package_manager }} run ruff format .
 	{{ package_manager }} run ruff check . --fix
 
 .PHONY: lint
-lint:  ## Run all linters (black/ruff/pylint/mypy).
-	{{ package_manager }} run black --check .
+lint:  ## Run all linters (ruff/mypy).
 	{{ package_manager }} run ruff check .
 	make mypy
+
+.PHONY: security-scan
+security-scan:  ## Run security scan using Bandit.
+	{{ package_manager }} run bandit -r {{ module_name }}
 
 .PHONY: test
 test:  ## Run the tests and check coverage.
@@ -50,14 +52,8 @@ install-dev:  ## Install the dependencies including dev.
 	pipenv install --dev
 	{%- endif %}
 
-.PHONY: megalint
-megalint:  ## Run the mega-linter.
-	docker run --platform linux/amd64 --rm \
-		-v /var/run/docker.sock:/var/run/docker.sock:rw \
-		-v $(shell pwd):/tmp/lint:rw \
-		oxsecurity/megalinter:v7
 {% if enable_copier_updates %}
 .PHONY: copier-update
 copier-update:  ## Update the project using the initial copier template.
 	{{ package_manager }} run copier update --trust
-{%- endif -%}
+{%- endif %}
