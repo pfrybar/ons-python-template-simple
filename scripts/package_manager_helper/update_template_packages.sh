@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DEV_DEPENDENCIES=("pylint" "black" "pytest" "pytest-xdist" "ruff" "pytest-cov" "mypy")
+DEV_DEPENDENCIES=("bandit" "pytest" "pytest-xdist" "ruff" "pytest-cov")
 TEMPLATE_DIR="../../project_template"
 
 # Function to handle package installation and file copying
