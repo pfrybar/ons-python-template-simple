@@ -361,19 +361,7 @@ There are many alternatives to the tools used in this template, and you may pref
     - [pdm](https://pdm.fming.dev/)
 - *Linting/Formatting with:*
 
-    - [SuperLinter](https://github.com/super-linter/super-linter)
-    - [pylint](https://pylint.pycqa.org/en/latest/index.html)
-    - [flake8](https://flake8.pycqa.org/en/latest/)
-    - [black](https://black.readthedocs.io/en/stable/)
-    - [isort](https://pycqa.github.io/isort/)
-    - [pydocstyle](https://www.pydocstyle.org/en/stable/index.html)
-    - [pyupgrade](https://github.com/asottile/pyupgrade)
-    - [autoflake](https://github.com/PyCQA/autoflake)
-- *Type checking with:*
-
-    - [pytype](https://github.com/google/pytype) (Google)
-    - [pyright](https://github.com/microsoft/pyright) (Microsoft)
-    - [pyre](https://pyre-check.org/) (Facebook)
+    - [ruff](https://github.com/astral-sh/ruff)
 - *Security with:*
 
     - [bandit](https://pypi.org/project/bandit/)
@@ -387,7 +375,6 @@ There are many alternatives to the tools used in this template, and you may pref
 - Further customisation options for the template:
     - Ability to choose your own Package Manager (Poetry, Pipenv, PDM, etc.)
     - Ability to choose your own Linting/Formatting tools
-    - Ability to choose your own Type Checking tools
     - Ability to configure the GitHub repo setting post-generation via GitHub Template feature.
 - Integrate with the ONS Software Developer Portal.
 - Ability to update the project with the latest template changes.
