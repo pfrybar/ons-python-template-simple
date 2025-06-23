@@ -87,11 +87,10 @@ To get a local copy up and running, follow these simple steps.
 
 Ensure you have the following installed:
 
-1. **Python**: Version specified in `.python-version`. We recommend using [pyenv](https://github.com/pyenv/pyenv) for
-   managing Python versions.
+1. **Python**: Version specified in `.python-version`.
 2. **[{{ package_manager | title }}]({{ macros.package_manager_url() }})**: This is used to manage package dependencies and virtual
    environments.
-3. **Operation System**: Ubuntu/MacOS
+3. **Operation System**: MacOS
 
 ### Installation
 
@@ -180,13 +179,13 @@ make security-scan
 If you'd like GitHub Actions to *commit back fixes* automatically:
 
 1. **Create a Personal Access Token (classic)** with `repo` → `contents:write` scope.  
-      1. Go to [generate new token](https://github.com/settings/personal-access-tokens/new   ).
+      1. Go to [generate new token](https://github.com/settings/personal-access-tokens/new)
       2. Name the token. Change the `Resource owner` to `{{ repository_owner }}` 
-      3. In Repository Access choose `Only select repositories`. Select the repository `{{ reposity_owner }}/{{ repository_name }}`.
-      4. Click `Repository permissions`. Scroll to the `Contents` row and change the `Access: no access` to `Access: Read and Write`.
-      5. Scroll to the bottom and click `Generate token and request access`.
-      6. Copy the PAT beginning with `github_pat_`. 
-      7. Go to your repository ([link here](https://github.com/{{ repository_owner }}/{{ repository_name }}/settings/secrets/actions)) and add it to the `Repository secrets` as `PAT_TOKEN`.
+      3. In Repository Access choose `Only select repositories`. Select the repository `{{ reposity_owner }}/{{ repository_name }}`
+      4. Click `Repository permissions`. Scroll to the `Contents` row and change the `Access: no access` to `Access: Read and Write`
+      5. Scroll to the bottom and click `Generate token and request access`
+      6. Copy the PAT beginning with `github_pat_`
+      7. Go to your repository secrets ([link here](https://github.com/{{ repository_owner }}/{{ repository_name }}/settings/secrets/actions)) and add it to the `Repository secrets` with the name `PAT_TOKEN` and the value of the PAT.
 
 2. Enable the example workflows provided in `.github`:
 
@@ -206,6 +205,17 @@ What they do:
 
 > Without the PAT token the commit made by the workflow would not trigger other workflows (GitHub protection against endless loops).
 {% endif %}
+
+#### Pre-commit Hooks
+
+The project includes pre-commit hooks to automatically run linting, formatting, and security checks before each commit. To set up pre-commit hooks:
+
+```bash
+pip install pre-commit
+pre-commit install
+```
+
+This will automatically run Ruff, Bandit on staged files before allowing commits.
 
 ## Contributing
 
