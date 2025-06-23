@@ -3,9 +3,9 @@
 
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml)
 <!-- Uncomment after enabling Security Scan by renaming [security-scan.yml.example](.github/security-scan.yml.example) to security-scan.yml and moving it to the [.github/workflows](.github/workflows) folder [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml) -->
-{%- if is_public_repo %} [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
+{%- if is_public_repo %}
+[![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
 {%- endif %}
-
 [![Linting: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/blob/main/LICENSE)
@@ -180,7 +180,14 @@ make security-scan
 If you'd like GitHub Actions to *commit back fixes* automatically:
 
 1. **Create a Personal Access Token (classic)** with `repo` → `contents:write` scope.  
-   Add it to the repository secrets as `PAT_TOKEN`.
+      1. Go to [generate new token](https://github.com/settings/personal-access-tokens/new   ).
+      2. Name the token. Change the `Resource owner` to `{{ repository_owner }}` 
+      3. In Repository Access choose `Only select repositories`. Select the repository `{{ reposity_owner }}/{{ repository_name }}`.
+      4. Click `Repository permissions`. Scroll to the `Contents` row and change the `Access: no access` to `Access: Read and Write`.
+      5. Scroll to the bottom and click `Generate token and request access`.
+      6. Copy the PAT beginning with `github_pat_`. 
+      7. Go to your repository ([link here](https://github.com/{{ repository_owner }}/{{ repository_name }}/settings/secrets/actions)) and add it to the `Repository secrets` as `PAT_TOKEN`.
+
 2. Enable the example workflows provided in `.github`:
 
    ```text
