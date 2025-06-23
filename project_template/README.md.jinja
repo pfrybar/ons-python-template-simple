@@ -208,14 +208,31 @@ What they do:
 
 #### Pre-commit Hooks
 
-The project includes pre-commit hooks to automatically run linting, formatting, and security checks before each commit. To set up pre-commit hooks:
+The project includes pre-commit hooks to automatically run linting, formatting, and security checks before each commit.
+
+1. Install **pre-commit** using your selected package manager:
+
+   {% if package_manager == 'poetry' %}
+   ```bash
+   poetry add --group dev pre-commit
+   ```
+   {% elif package_manager == 'pipenv' %}
+   ```bash
+   pipenv install --dev pre-commit
+   ```
+   {% else %}
+   ```bash
+   pip install pre-commit
+   ```
+   {% endif %}
+
+2. Activate the git hooks:
 
 ```bash
-pip install pre-commit
 pre-commit install
 ```
 
-This will automatically run Ruff, Bandit on staged files before allowing commits.
+From now on Ruff and Bandit will run automatically on the files you stage before every commit.
 
 ## Contributing
 
