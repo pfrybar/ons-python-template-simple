@@ -12,7 +12,7 @@ jobs:
   bandit-fix:
     name: Update Bandit baseline
     runs-on: ubuntu-22.04
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: {% raw %}github.event.pull_request.head.repo.full_name == github.repository{% endraw %}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -44,6 +44,6 @@ jobs:
       - name: Commit baseline
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: ${{ github.head_ref }}
+          branch: {% raw %}${{ github.head_ref || github.ref}}{% endraw %}
           commit_message: "chore: update Bandit baseline"
           file_pattern: bandit.baseline 

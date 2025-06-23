@@ -12,7 +12,7 @@ jobs:
   ruff-fix:
     name: Ruff format & commit
     runs-on: ubuntu-22.04
-    if: github.event.pull_request.head.repo.full_name == github.repository  # skip forks
+    if: {% raw %}github.event.pull_request.head.repo.full_name == github.repository{% endraw %}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,7 +42,7 @@ jobs:
       - name: Commit & push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          branch: ${{ github.head_ref }}
+          branch: {% raw %}${{ github.head_ref || github.ref }}{% endraw %}
           commit_message: "style: apply Ruff auto-formatting"
           commit_user_name: github-actions[bot]
           commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
