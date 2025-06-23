@@ -198,3 +198,9 @@ not_pipenv_copier:
   help: "Not prompted. This is computed for re-use."
   default: "{{ package_manager == 'pipenv' and not enable_copier_updates }}"
   when: false
+
+# Auto-fix workflows
+enable_auto_fix_workflows:
+  type: bool
+  help: "Do you want to include example auto-fix workflows (Ruff format & Bandit baseline)?"
+  default: true

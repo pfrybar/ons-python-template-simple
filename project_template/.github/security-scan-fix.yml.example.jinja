@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.PAT_TOKEN || github.token }}
+          token: {% raw %}${{ secrets.PAT_TOKEN || github.token }}{% endraw %}
 
       {%- if package_manager == 'poetry' %}
       - name: Install Poetry
