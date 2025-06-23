@@ -1,7 +1,6 @@
 # ONS Python Template
 
 [![Build Status](https://github.com/ONSdigital/ons-python-template/actions/workflows/ci.yml/badge.svg)](https://github.com/ONSdigital/ons-python-template/actions/workflows/ci.yml)
-[![Build Status](https://github.com/ONSdigital/ons-python-template/actions/workflows/mega-linter.yml/badge.svg)](https://github.com/ONSdigital/ons-python-template/actions/workflows/mega-linter.yml)
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/ONSdigital/ons-python-template/blob/main/LICENSE)
 
 This repository serves as a template for creating a Python project, complete with fundamental tooling and
@@ -44,11 +43,9 @@ This template includes a number of features to help you get started developing y
 - Python Linting/Formatting with:
     - [Ruff](https://github.com/astral-sh/ruff) - An all-in-one alternative to tools such as flake8, isort, pydocstyle,
       pyupgrade, autoflake etc.
-    - [pylint](https://pylint.pycqa.org/en/latest/index.html)
-    - [black](https://black.readthedocs.io/en/stable/)
-- Type checking with [mypy](http://mypy-lang.org/).
 - Testing with [pytest](https://docs.pytest.org/en/stable/)
 - Code Coverage with [pytest-cov](https://pytest-cov.readthedocs.io/en/latest/)
+- Security Scanning with [Bandit](https://bandit.readthedocs.io/en/latest/)
 - Continuous Integration using [GitHub Actions](https://docs.github.com/en/actions) with jobs to lint and test your
   project.
 - Security with:
@@ -61,7 +58,6 @@ This template includes a number of features to help you get started developing y
   editors and IDEs.
 - Extensible Python linting and formatting configuration using pyproject.toml, ensuring adherence to best practices.
 - Linting the rest of the repository files/formats such as YAML, GitHub Actions, Shell scripts etc.
-  using [Mega Linter](https://github.com/oxsecurity/megalinter)
 - **GitHub Usage Policy Compliance** including:
     - CODEOWNERS file generation
     - Repository naming validation
@@ -85,11 +81,11 @@ You have two options for project generation from this template:
 
 > [!NOTE]
 > **DO NOT FORK** this repository. Instead, use the
-> **[Use this template](https://github.com/ONSdigital/ons-python-template/generate)** feature.
+> **[Use this template](https://github.com/ONS-Innovation/ons-python-template-simple/generate)** feature.
 
 To get started:
 
-1. Click on **[Use this template](https://github.com/ONSdigital/ons-python-template/generate)**
+1. Click on **[Use this template](https://github.com/ONS-Innovation/ons-python-template-simple/generate)**
 2. Name your new repository and provide a description, then click **Create repository**. *Note: the repository name
    should be lowercase and use hyphens (`-`) instead of underscores.*
 3. GitHub will now copy the contents over and GitHub Actions will process the template and commit to your new repository
@@ -134,7 +130,7 @@ questions, Copier will generate the project for you.
 To generate the project run:
 
 ```bash
-copier copy --trust gh:ONSdigital/ons-python-template /path/to/your/new/project
+copier copy --trust gh:ONS-Innovation/ons-python-template-simple /path/to/your/new/project
 ```
 
 Replace `/path/to/your/new/project` with the path to the directory where you want to create your new project. This
@@ -207,32 +203,14 @@ This template helps ensure compliance with the ONS GitHub Usage Policy by automa
 - **Compliance checklist**: Added to the generated README to guide developers through required steps
 - **Enhanced .gitignore**: Includes patterns to prevent accidental commit of sensitive files
 
-#### 4. MegaLinter
-
-##### Reducing the Docker image size for MegaLinter
-
-MegaLinter is set up to use the largest Docker image by default, containing all available linters and code analysis
-tools. This setup is designed for comprehensive coverage and serves as a solid starting point for new projects. However,
-you might not need every tool included in this image, as it can be quite large.
-
-To save space and optimise your setup, you can choose a more specific MegaLinter Docker image, called
-a [flavor](https://megalinter.io/latest/flavors/). Each flavor includes a subset of linters and tools suited for
-particular languages or frameworks.
-
-If you're unsure which flavor is best for you, try running MegaLinter with the default set up after your project has
-matured. After the run, MegaLinter will analyse the output and suggest a more suitable flavor if necessary. This helps
-you customise your setup to include only the tools you need, reducing the Docker image size and improving efficiency.
-
 ##### Auto-fixing linting issues via GitHub Actions
 
-If you would like to auto-fix issues using MegaLinter and commit the changes back to the PR, you can will need to create
+If you would like to auto-fix security issues using Bandit and commit the changes back to the PR, you can will need to create
 a **Personal Access Token** and add it as
 a [secret to your repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
-Without a **PAT** token, commits/PRs made by workflows do not trigger other workflows, including the MegaLinter
+Without a **PAT** token, commits/PRs made by workflows do not trigger other workflows, including the Security Scan
 workflow.
 This is a security feature of GitHub Actions to prevent infinite loops.
-For more info,
-see [MegaLinter: Auto-fixing issues](https://megalinter.io/latest/config-apply-fixes/#apply-fixes-issues).
 
 ### Updating Project with Template Changes
 
@@ -269,11 +247,10 @@ The structure of the templated repo is as follows:
 
 ```plaintext
 ├── .github                           # Contains GitHub-specific configurations, including Actions workflows for CI/CD processes.
-│   ├── linters                       # Directory for config files used by linter run via MegaLinter, e.g. .markdown-lint.json, .yaml-lint.yml etc.
 │   ├── workflows                     # Directory for GitHub Actions workflows.
 │   │   ├── ci.yml                    # Workflow for Continuous Integration, running tests and other checks on commits to `main` and on pull requests.
 │   │   ├── codeql.yml                # CodeQL workflow for automated identification of security vulnerabilities in the codebase. (Public Repos Only)
-│   │   └── mega-linter.yml           # MegaLinter workflow for linting the project.
+│   ├── security-scan.yml.example     # Security scan workflow for running Bandit on the project. Needs to be renamed to security-scan.yml and moved to the [.github/workflows](.github/workflows) folder
 │   ├── dependabot.yml                # Configuration for Dependabot, which automatically checks for outdated dependencies and creates pull requests to update them.
 │   ├── ISSUE_TEMPLATE.md             # Template for issues raised in the repository.
 │   ├── PULL_REQUEST_TEMPLATE.md      # Template for pull requests raised in the repository.
@@ -291,8 +268,6 @@ The structure of the templated repo is as follows:
 ├── .editorconfig                     # Configuration file for maintaining consistent coding styles for multiple developers working on the same project across various editors and IDEs.
 ├── .gitattributes                    # Git attributes file for defining attributes per path, such as line endings and merge strategies.
 ├── .gitignore                        # Specifies intentionally untracked files to ignore when using Git, like build outputs and temporary files.
-├── .mega-linter.yml                  # Configuration file for MegaLinter, specifying the linters and code analysers to be used.
-├── .pylintrc                         # Configuration file for Pylint.
 ├── .python-version                   # Specifies the Python version to be used with pyenv.
 ├── CODE_OF_CONDUCT.md                # A code of conduct for the project, outlining the standards of behaviour for contributors.
 ├── CONTRIBUTING.md                   # Guidelines for contributing to the project, including information on how to raise issues and submit pull requests.
@@ -333,38 +308,12 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   written in Rust.*
 - *Ruff is also designed to be more extensible and configurable than the tools it replaces.*
 
-*3. Why use pylint and black when Ruff offers similar functionality?*
-
-- *Ruff is a newer tool that does not yet fully implement the features of pylint and black. While fuller support is
-  under development, using these tools in addition to Ruff is recommended for now. Once Ruff has fuller support for
-  these tools, it is recommended to use Ruff as the primary tool for linting and formatting.*
-
-*4. Why use mypy for type checking instead of pytype, pyright, or pyre?*
-
-- *mypy is a static type checker for Python that is designed to be easy to use and understand.*
-- *mypy is also the most widely used type checker for Python and has the most extensive documentation and community
-  support.*
-- *Pytype, pyright, and pyre are also good alternatives to mypy and may be considered in the future as
-  alternatives or even in addition to
-  mypy.*
-
-*5. Why use pytest for testing instead of unittest?*
+*4. Why use pytest for testing instead of unittest?*
 
 - *pytest is a modern testing framework for Python that is designed to be easy to use and understand.*
 - *pytest is more developer-friendly than unittest and has a more extensive ecosystem of plugins and extensions.*
 
-*6. What is MegaLinter?*
-
-- *MegaLinter is a ready-to-run collection of linters and code analysers, to help validate your source code. The
-  goal of super-linter is to help you establish best practices and consistent formatting across multiple programming
-  languages, formats and ensure developers are adhering to those conventions.*
-- *MegaLinter is enabled in GitHub Actions and locally via Docker for languages other than Python, such as YAML,
-  GitHub Actions, Shell scripts etc.*
-- *It is being used for other languages/extensions as a catch-all and a quick-win, however, as your project grows,
-  you may want
-  to consider using individual linters for each language.*
-
-*7. Why is MegaLinter not used for Python?*
+*5. Why is MegaLinter not used for Python?*
 
 - *While MegaLinter provides convenience by bundling multiple linters into a single package, opting for individual
   tools allows for greater flexibility and customisation to match project-specific requirements and coding
@@ -375,13 +324,13 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   Python it might be sufficient, but for more complex projects, tooling managed via your chosen package manager is
   encouraged.*
 
-*8. Why not use SuperLinter?*
+*6. Why not use SuperLinter?*
 
 - *SuperLinter is a similar tool to MegaLinter, but it is not as developer-friendly and does not have as extensive
   documentation.*
 - *SuperLinter does not allow auto-fixing of issues, which is a feature of MegaLinter.*
 
-*9. Why does this not provide a full example of a Python project, i.e a Flask app, FastAPI app, Python package etc.?*
+*7. Why does this not provide a full example of a Python project, i.e a Flask app, FastAPI app, Python package etc.?*
 
 - *This template is intended as a starting point for new Python projects, not as a comprehensive example. The Python
   code in this repo is not intended to be used for anything, it is just a placeholder. The idea is that you can create a
@@ -389,7 +338,7 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
   set up.*
 - *Flavoured templates, such as for a Flask or FastAPI app, might be considered in the future.*
 
-*10. My projects do not have a CodeQL workflow. Why?*
+*8. My projects do not have a CodeQL workflow. Why?*
 
 - *CodeQL is only available for public repositories. If your repository is private/internal, the CodeQL workflow will
   not be included as it requires GitHub Advanced Security Enterprise plan which is currently not available for our
@@ -397,7 +346,7 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
 - *CodeQL will attempt to run when you first clone the repo, however it will fail if the repo is private/internal.
   You can safely ignore this failure and or remove the CodeQL workflows run from your repo*
 
-*11. Why is Secret Scanning and Push Protection not enabled?*
+*9. Why is Secret Scanning and Push Protection not enabled?*
 
 - *Secret scanning and push protection are enabled for public repositories.*
 - *Private/Internal repositories cannot use these without GitHub Advanced Security Enterprise plan which is currently

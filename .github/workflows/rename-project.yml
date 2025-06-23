@@ -127,7 +127,7 @@ jobs:
             - [ ] Update CODEOWNERS with appropriate team members
             - [ ] Complete README with project-specific information
             - [ ] Review and update dependencies as needed
-            - [ ] Enable MegaLinter by renaming mega-linter.yml.example to mega-linter.yml and moving it to the .github/workflow folder
+            - [ ] Enable Security Scan by renaming security-scan.yml.example to security-scan.yml and moving it to the .github/workflows folder
 
             This PR was automatically created and merged by the template initialisation process.
           branch: template-initialisation
