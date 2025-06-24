@@ -31,3 +31,7 @@ update-template-packages:  ## Update the project using the initial copier templa
 .PHONY: clean
 clean: ## Clean the temporary files.
 	rm -rf .ruff_cache
+
+.PHONY: test
+test:  ## Run the tests.
+	echo "Tests not implemented yet"
