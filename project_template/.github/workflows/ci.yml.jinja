@@ -23,17 +23,16 @@ jobs:
       - name: Install Poetry
         run: pipx install poetry==1.8.3
       {%- endif %}
+      {%- if package_manager == 'pipenv' %}
+      - name: Install Pipenv
+        run: pipx install pipenv==2025.0.3
+      {%- endif %}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: .python-version
           cache: {{ package_manager }}
-      {%- if package_manager == 'pipenv' %}
-
-      - name: Install Pipenv
-        run: pipx install pipenv==2025.0.3
-      {%- endif %}
 
       - name: Install dependencies
         run: make install-dev
