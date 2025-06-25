@@ -2,38 +2,13 @@
 # {{ repository_name }}
 
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/ci.yml)
-<!-- Uncomment after enabling Security Scan by renaming [security-scan.yml.example](.github/security-scan.yml.example) to security-scan.yml and moving it to the [.github/workflows](.github/workflows) folder [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml) -->
+[![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/security-scan.yml)
 {%- if is_public_repo %}
 [![Build Status](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml/badge.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/actions/workflows/codeql.yml)
 {%- endif %}
 [![Linting: Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![{{ package_manager }}-managed](https://img.shields.io/badge/{{ package_manager }}-managed-blue)]({{ macros.package_manager_url() }})
 [![License - MIT](https://img.shields.io/badge/licence%20-MIT-1ac403.svg)](https://github.com/{{ repository_owner }}/{{ repository_name }}/blob/main/LICENSE)
-
----
-
-## Quick Setup: Enable Security Scan
-
-This repository includes a pre-configured Bandit security scan workflow for automated security checks, but it needs to be manually enabled:
-
-**To activate the Security Scan:**
-
-1. Rename [.github/security-scan.yml.example](.github/security-scan.yml.example) to `.github/security-scan.yml`
-2. Move the file from [.github](.github) to the [.github/workflows](.github/workflows) folder
-3. Commit and push the change
-
-**Why this step is needed:**
-GitHub Actions security restrictions prevent automatic creation of workflow files during template initialisation.
-Learn more about [GitHub Token permissions and workflow limitations](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token).
-
-Once enabled, the Security Scan will automatically run on all Pull Requests and commits to `main`, checking for:
-
-- Common security issues in Python code
-- Hardcoded passwords, API keys, and tokens
-- SQL injection vulnerabilities
-- Use of insecure functions and libraries
-
----
 
 {{ repository_description }}
 
@@ -45,22 +20,6 @@ Please update it with specific information about your project, including:
 > - Usage examples and API documentation
 > - Contributing guidelines specific to your project
 > - Any project-specific compliance requirements
-
----
-
-## Compliance Checklist
-
-Before you start developing, please ensure you've completed the following compliance requirements:
-
-- [ ] **CODEOWNERS**: Update `.github/CODEOWNERS` with the appropriate team/individuals responsible for this repository
-- [ ] **README**: Update this README with project-specific information (remove this notice when done)
-- [ ] **Repository Settings**: Ensure branch protection rules are enabled (should be automatic if using template setup)
-- [ ] **Security**: Review and configure security settings appropriate for your project
-{%- if not is_public_repo %}
-- [ ] **PIRR**: Complete the `PIRR.md` file with reasoning for private/internal repository status
-{%- endif %}
-- [ ] **License**: Verify the LICENSE file is appropriate for your project
-- [ ] **Dependencies**: Review and update dependencies as needed for your project
 
 ---
 
@@ -96,32 +55,32 @@ Ensure you have the following installed:
 
 1. Clone the repository and install the required dependencies.
 
-   ```bash
-   git clone https://github.com/{{ repository_owner }}/{{ repository_name }}.git
-   ```
+```bash
+git clone https://github.com/{{ repository_owner }}/{{ repository_name }}.git
+```
 
 2. Install dependencies
 
-   [{{ package_manager | title }}]({{ macros.package_manager_url() }}) is used to manage dependencies in this project. For more information, read
-   the [{{ package_manager | title }} documentation]({{ macros.package_manager_url() }}).
+[{{ package_manager | title }}]({{ macros.package_manager_url() }}) is used to manage dependencies in this project. For more information, read
+the [{{ package_manager | title }} documentation]({{ macros.package_manager_url() }}).
 
-   To install all dependencies, including development dependencies, run:
+To install all dependencies, including development dependencies, run:
 
-   ```bash
-   make install-dev
-   ```
+```bash
+make install-dev
+```
 
-   To install only production dependencies, run:
+To install only production dependencies, run:
 
-   ```bash
-   make install
+```bash
+make install
    ```
 
 3. Run the application
 
-   ```bash
-   make run
-   ```
+```bash
+make run
+```
 
 ## Development
 
@@ -173,58 +132,25 @@ To run the security scan, run:
 make security-scan
 ```
 
-{% if enable_auto_fix_workflows %}
-### Optional auto-fix workflows
-
-If you'd like GitHub Actions to *commit back fixes* automatically:
-
-1. **Create a Personal Access Token (classic)** with `repo` → `contents:write` scope.  
-      1. Go to [generate new token](https://github.com/settings/personal-access-tokens/new)
-      2. Name the token. Change the `Resource owner` to `{{ repository_owner }}` 
-      3. In Repository Access choose `Only select repositories`. Select the repository `{{ reposity_owner }}/{{ repository_name }}`
-      4. Click `Repository permissions`. Scroll to the `Contents` row and change the `Access: no access` to `Access: Read and Write`
-      5. Scroll to the bottom and click `Generate token and request access`
-      6. Copy the PAT beginning with `github_pat_`
-      7. Go to your repository secrets ([link here](https://github.com/{{ repository_owner }}/{{ repository_name }}/settings/secrets/actions)) and add it to the `Repository secrets` with the name `PAT_TOKEN` and the value of the PAT.
-
-2. Enable the example workflows provided in `.github`:
-
-   ```text
-   # Ruff (format + lint-fix)
-   mv .github/ruff-fix.yml.example .github/workflows/ruff-fix.yml
-
-   # Bandit baseline/suppressions generation
-   mv .github/security-scan-fix.yml.example .github/workflows/security-scan-fix.yml
-   ```
-3. Commit & push.
-
-What they do:
-
-* **ruff-fix** – runs `make format` (Ruff formatting + autofix) and, if code changed, commits the diff back to the branch using the `PAT_TOKEN`.
-* **security-scan-fix** – runs Bandit and, when new findings appear, (re)generates `bandit.baseline` so subsequent scans only fail on *new* vulnerabilities, then commits it back.
-
-> Without the PAT token the commit made by the workflow would not trigger other workflows (GitHub protection against endless loops).
-{% endif %}
-
 #### Pre-commit Hooks
 
 The project includes pre-commit hooks to automatically run linting, formatting, and security checks before each commit.
 
 1. Install **pre-commit** using your selected package manager:
 
-   {% if package_manager == 'poetry' %}
-   ```bash
-   poetry add --group dev pre-commit
-   ```
-   {% elif package_manager == 'pipenv' %}
-   ```bash
-   pipenv install --dev pre-commit
-   ```
-   {% else %}
-   ```bash
-   pip install pre-commit
-   ```
-   {% endif %}
+{% if package_manager == 'poetry' %}
+```bash
+poetry add --group dev pre-commit
+```
+{% elif package_manager == 'pipenv' %}
+```bash
+pipenv install --dev pre-commit
+```
+{% else %}
+```bash
+pip install pre-commit
+```
+{% endif %}
 
 2. Activate the git hooks:
 
