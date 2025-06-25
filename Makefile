@@ -35,3 +35,7 @@ clean: ## Clean the temporary files.
 .PHONY: test
 test:  ## Run the tests.
 	echo "Tests not implemented yet"
+
+.PHONY: security-scan	
+security-scan:  ## Run the security scan.
+	echo "Security scan not implemented yet"
