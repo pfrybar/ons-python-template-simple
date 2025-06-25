@@ -203,15 +203,6 @@ This template helps ensure compliance with the ONS GitHub Usage Policy by automa
 - **Compliance checklist**: Added to the generated README to guide developers through required steps
 - **Enhanced .gitignore**: Includes patterns to prevent accidental commit of sensitive files
 
-##### Auto-fixing linting issues via GitHub Actions
-
-If you would like to auto-fix security issues using Bandit and commit the changes back to the PR, you can will need to create
-a **Personal Access Token** and add it as
-a [secret to your repository](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions).
-Without a **PAT** token, commits/PRs made by workflows do not trigger other workflows, including the Security Scan
-workflow.
-This is a security feature of GitHub Actions to prevent infinite loops.
-
 ### Updating Project with Template Changes
 
 > [!CAUTION]
@@ -250,7 +241,7 @@ The structure of the templated repo is as follows:
 │   ├── workflows                     # Directory for GitHub Actions workflows.
 │   │   ├── ci.yml                    # Workflow for Continuous Integration, running tests and other checks on commits to `main` and on pull requests.
 │   │   ├── codeql.yml                # CodeQL workflow for automated identification of security vulnerabilities in the codebase. (Public Repos Only)
-│   ├── security-scan.yml.example     # Security scan workflow for running Bandit on the project. Needs to be renamed to security-scan.yml and moved to the [.github/workflows](.github/workflows) folder
+│   │   ├── security-scan.yml         # Security scan workflow for running Bandit on the project.
 │   ├── dependabot.yml                # Configuration for Dependabot, which automatically checks for outdated dependencies and creates pull requests to update them.
 │   ├── ISSUE_TEMPLATE.md             # Template for issues raised in the repository.
 │   ├── PULL_REQUEST_TEMPLATE.md      # Template for pull requests raised in the repository.
@@ -269,6 +260,7 @@ The structure of the templated repo is as follows:
 ├── .gitattributes                    # Git attributes file for defining attributes per path, such as line endings and merge strategies.
 ├── .gitignore                        # Specifies intentionally untracked files to ignore when using Git, like build outputs and temporary files.
 ├── .python-version                   # Specifies the Python version to be used with pyenv.
+├── .pre-commit-config.yaml          # Configuration file for pre-commit hooks, used to run linting and formatting on the project.
 ├── CODE_OF_CONDUCT.md                # A code of conduct for the project, outlining the standards of behaviour for contributors.
 ├── CONTRIBUTING.md                   # Guidelines for contributing to the project, including information on how to raise issues and submit pull requests.
 ├── LICENSE                           # The license under which the project is made available.
@@ -352,31 +344,14 @@ prefer. See the [Alternatives Software/Tools][alternative-software-tools] sectio
 - *Private/Internal repositories cannot use these without GitHub Advanced Security Enterprise plan which is currently
   not available for our organisation.*
 
-## Alternatives Software/Tools
-
-There are many alternatives to the tools used in this template, and you may prefer to use some of these alternatives.
-
-- *Python package management with:*
-
-    - [pdm](https://pdm.fming.dev/)
-- *Linting/Formatting with:*
-
-    - [ruff](https://github.com/astral-sh/ruff)
-- *Security with:*
-
-    - [bandit](https://pypi.org/project/bandit/)
-    - [safety](https://pypi.org/project/safety/)
-
 ## Future Plans
 
 - Add tests
 - Add more documentation and developer guidance
-- Add support for pre-commit hooks
 - Further customisation options for the template:
     - Ability to choose your own Package Manager (Poetry, Pipenv, PDM, etc.)
     - Ability to choose your own Linting/Formatting tools
     - Ability to configure the GitHub repo setting post-generation via GitHub Template feature.
-- Integrate with the ONS Software Developer Portal.
 - Ability to update the project with the latest template changes.
 
 ## Development
